@@ -75,8 +75,7 @@ def get_index():
 
 #-----------------------------------------------------------------------------
 
-# Redirect to login
-# @get('/')
+# Redirect to contact page
 @get('/contact')
 def contact():
     '''
