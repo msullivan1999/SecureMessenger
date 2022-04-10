@@ -75,16 +75,6 @@ def get_index():
 
 #-----------------------------------------------------------------------------
 
-# Redirect to contact page
-@get('/contact')
-def contact():
-    '''
-        get_index
-        
-        Serves the index page
-    '''
-    return model.contact_form()
-
 # Display the login page
 @get('/login')
 def get_login_controller():
@@ -114,7 +104,9 @@ def post_login():
     # Call the appropriate method
     return model.login_check(username, password)
 
+#-----------------------------------------------------------------------------
 
+# register a new user
 
 #-----------------------------------------------------------------------------
 
@@ -139,3 +131,48 @@ def post_debug(cmd):
 @error(404)
 def error(error): 
     return model.handle_errors(error)
+    
+    
+#-----------------------------------------------------------------------------
+
+# bind fn. to get the contact page
+@get('/contact')
+def get_contact():
+    return model.get_contact()
+
+
+#-----------------------------------------------------------------------------
+
+@get('/register')
+def get_register():
+    return model.get_register()
+
+#-----------------------------------------------------------------------------
+
+@post('/register')
+def post_register():
+    # Handle the form processing
+    username = request.forms.get('username')
+    password = request.forms.get('password')
+    
+    # Call the appropriate method
+    return model.register_user(username, password)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

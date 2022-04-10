@@ -7,9 +7,12 @@
 '''
 import view
 import random
+from sql import SQLDatabase
 
 # Initialise our views, all arguments are defaults for the template
 page_view = view.View()
+
+SQLOBJ = SQLDatabase('database.db')
 
 #-----------------------------------------------------------------------------
 # Index
@@ -33,14 +36,6 @@ def login_form():
     '''
     return page_view("login")
 
-
-def contact_form():
-    '''
-        login_form
-        Returns the view for the login_form
-    '''
-    return page_view("contact")
-
 #-----------------------------------------------------------------------------
 
 # Check the login credentials
@@ -58,14 +53,13 @@ def login_check(username, password):
     # By default assume good creds
     login = True
     
-    if username != "admin": # Wrong Username
-        err_str = "Incorrect Username"
-        login = False
+    # use the check_credentials function (l8r)
+    # to hash the salt etc. through
     
-    if password != "password": # Wrong password
-        err_str = "Incorrect Password"
-        login = False
-        
+    login = SQLOBJ.check_credentials(username, password)
+
+    err_str = "incorrect user and password combination"
+    
     if login: 
         return page_view("valid", name=username)
     else:
@@ -119,3 +113,55 @@ def handle_errors(error):
     error_type = error.status_line
     error_msg = error.body
     return page_view("error", error_type=error_type, error_msg=error_msg)
+    
+#-----------------------------------------------------------------------------
+# Contact Page
+#-----------------------------------------------------------------------------
+
+def get_contact():
+    return page_view("contact")
+
+#-----------------------------------------------------------------------------
+# Register Page
+#-----------------------------------------------------------------------------
+
+# get the register page
+
+def get_register():
+
+    return page_view('register')
+
+
+# taking register details
+
+def register_user(usr, pwd):
+
+	'''
+		:: usr :: the new user's usrname
+		:: pwd :: the new user's passwrd
+		
+		Creates a new user in the database.db file
+		calls `sql.py` add_user function
+		
+	'''
+
+	SQLOBJ.add_user(usr, pwd)
+
+	return page_view('registration_complete', user=usr)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
