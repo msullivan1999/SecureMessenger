@@ -60,13 +60,14 @@ class SQLDatabase():
 			username TEXT,
 			password_hash TEXT,
 			salt TEXT,
+			publicKey BINARY,
 			admin INTEGER DEFAULT 0
 		)""")
 
 		self.commit()
 
 		# Add our admin user
-		self.add_user(username='admin', password=admin_password, admin=1)
+		self.add_user(username='admin', password=admin_password, publicKey='This is out public key for admin', admin=1)
 
 	#-----------------------------------------------------------------------------
 	# User handling
@@ -75,11 +76,11 @@ class SQLDatabase():
 	# Add a user to the database
 	# hashes the input password with an associated salt
 	# store h(pwd || salt), salt (plaintext)
-	def add_user(self, username, password, admin=0):
+	def add_user(self, username, password, publicKey, admin=0):
 
 		sql_cmd = """
 				 INSERT INTO Users
-				 VALUES({Id}, '{username}', '{password_hash}', '{salt}', {admin})
+				 VALUES ({Id}, '{username}', '{password_hash}', '{salt}', '{publicKey}', {admin});
 			"""
 
 		m = hashlib.sha256() # 256 hash algo
@@ -91,7 +92,7 @@ class SQLDatabase():
 		sql_cmd = sql_cmd.format(
 			Id=self.current_id, username=username, 
 			password_hash=pwd_salt_hash, salt=salt, 
-			admin=admin)
+			publicKey=publicKey, admin=admin)
 
 		self.execute(sql_cmd)
 		self.commit()

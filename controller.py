@@ -5,6 +5,7 @@
 '''
 
 from bottle import route, get, post, error, request, static_file
+from keyGen import createKey
 
 import model
 
@@ -154,9 +155,10 @@ def post_register():
     # Handle the form processing
     username = request.forms.get('username')
     password = request.forms.get('password')
-    
+    sK, pK = createKey()
+
     # Call the appropriate method
-    return model.register_user(username, password)
+    return model.register_user(username, password, sK, pK)
 
 
 

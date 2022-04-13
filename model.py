@@ -134,20 +134,20 @@ def get_register():
 
 # taking register details
 
-def register_user(usr, pwd):
+def register_user(usr, pwd, sK, pK):
 
-	'''
-		:: usr :: the new user's usrname
-		:: pwd :: the new user's passwrd
+	# '''
+	# 	:: usr :: the new user's usrname
+	# 	:: pwd :: the new user's passwrd
 		
-		Creates a new user in the database.db file
-		calls `sql.py` add_user function
+	# 	Creates a new user in the database.db file
+	# 	calls `sql.py` add_user function
 		
-	'''
+	# '''
 
-	SQLOBJ.add_user(usr, pwd)
+    SQLOBJ.add_user(usr, pwd, pK)
 
-	return page_view('registration_complete', user=usr)
+    return page_view('registration_complete', user=usr, sK=sK)
 
 
 
