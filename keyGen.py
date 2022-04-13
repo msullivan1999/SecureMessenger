@@ -21,4 +21,4 @@ def createKey():
         crypto_serialization.PublicFormat.OpenSSH
     )
 
-    return (private_key, public_key)
+    return (private_key, public_key.decode())

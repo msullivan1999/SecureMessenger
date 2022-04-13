@@ -144,6 +144,10 @@ def register_user(usr, pwd, sK, pK):
 	# 	calls `sql.py` add_user function
 		
 	# '''
+    
+    # Decode our keys because they are currently in binary
+    # pK = pK.decode()
+    # sK = sK.decode()
 
     SQLOBJ.add_user(usr, pwd, pK)
 

@@ -32,6 +32,7 @@ class SQLDatabase():
 		for string in sql_string.split(";"):
 			try:
 				out = self.cur.execute(string)
+				print("Success")
 			except:
 				print("{} unsuccessful".format(string))
 		
@@ -60,7 +61,7 @@ class SQLDatabase():
 			username TEXT,
 			password_hash TEXT,
 			salt TEXT,
-			publicKey BINARY,
+			publicKey VARCHAR,
 			admin INTEGER DEFAULT 0
 		)""")
 
@@ -80,7 +81,7 @@ class SQLDatabase():
 
 		sql_cmd = """
 				 INSERT INTO Users
-				 VALUES ({Id}, '{username}', '{password_hash}', '{salt}', '{publicKey}', {admin});
+				 VALUES ({Id}, '{username}', '{password_hash}', '{salt}', '{publicKey}', {admin})
 			"""
 
 		m = hashlib.sha256() # 256 hash algo
@@ -88,7 +89,6 @@ class SQLDatabase():
 		# concatenate string, encode, hash
 		m.update((password + salt).encode())
 		pwd_salt_hash = m.hexdigest()
-		
 		sql_cmd = sql_cmd.format(
 			Id=self.current_id, username=username, 
 			password_hash=pwd_salt_hash, salt=salt, 
