@@ -1,0 +1,24 @@
+
+<h2>Users</h2>
+
+<script type="text/javascript">
+	foo = function(btn) {
+		var text = btn.textContent;
+		var usr = text.slice(4, text.length);
+		console.log('User clicked ' + usr);
+		console.log('User logged in: ' + sessionStorage.getItem('current_user'));
+	}
+</script>
+
+<table class="styled" id ="usrtable">
+    <thead>
+    </thead>
+    <tbody>
+        % for i in range(len(users)):
+        <tr>
+            <td>{{ users[i][0] }}</td>
+            <td><button type="button" onclick="foo(this)">Add {{ users[i][0] }}</button></td>
+        </tr>
+        % end
+    </tbody>
+</table>
