@@ -52,6 +52,7 @@ class SQLDatabase():
 
 		# Clear the database if needed
 		self.execute("DROP TABLE IF EXISTS Users")
+		self.execute("DROP TABLE IF EXISTS Pubkeys")
 		self.commit()
 
 		# Create the users table
@@ -62,6 +63,11 @@ class SQLDatabase():
 			salt TEXT,
 			admin INTEGER DEFAULT 0
 		)""")
+
+		self.execute('''CREATE TABLE Pubkeys(
+			public_key INT,
+			username TEXT
+		)''')
 
 		self.commit()
 
@@ -100,13 +106,27 @@ class SQLDatabase():
 		return True
 
 	#-----------------------------------------------------------------------------
+	# Adding usr public key
+	#-----------------------------------------------------------------------------
+	def add_user_key(self, username, pub_key):
+		sql_cmd='''
+			INSERT INTO Pubkeys
+			VALUES({public_key}, '{username}')
+		'''
+
+		sql_cmd = sql_cmd.format(username=username, public_key=pub_key)
+
+		self.execute(sql_cmd)
+		self.commit()
+
+	#-----------------------------------------------------------------------------
 
 	# Check login credentials
 	# get the salt from the user
 	# append to password & hash
 	# compare hashes
 	def check_credentials(self, username, password):
-	
+
 		sql_query = """
 				 SELECT *
 				 FROM Users
@@ -119,7 +139,7 @@ class SQLDatabase():
 		rows = self.cur.fetchall()
 
 		# no such user
-		if rows == None:
+		if rows == None or len(rows) == 0:
 			return False
 
 		# user exists
@@ -139,9 +159,31 @@ class SQLDatabase():
 			return True
 		return False
 
+	'''
 
+	get public key of a user from username
 
+	'''
+	def get_pub_key(self, usr):
+		query = '''
+			SELECT public_key FROM Pubkeys WHERE username = '{usr}'
+		'''
+		query = query.format(usr=usr)
+		self.execute(query)
+		rows = self.cur.fetchall()
+		return rows
 
+	'''
+
+	Retrieve list of all users from database
+
+	'''
+
+	def get_users(self):
+		sql_query = 'SELECT username FROM Users WHERE admin=0'
+		self.execute(sql_query)
+		rows = self.cur.fetchall()
+		return rows
 
 
 

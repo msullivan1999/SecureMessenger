@@ -60,8 +60,14 @@ def login_check(username, password):
 
     err_str = "incorrect user and password combination"
     
-    if login: 
-        return page_view("valid", name=username)
+    if login:
+        # get the public key of the valid user and
+        # send to the page
+        # we assume usernames are unique
+        key = 0
+        if username != 'admin':
+	        key = SQLOBJ.get_pub_key(username)
+        return page_view("valid", name=username, key=key[0][0])
     else:
         return page_view("invalid", reason=err_str)
 
@@ -134,24 +140,31 @@ def get_register():
 
 # taking register details
 
-def register_user(usr, pwd):
+def register_user(usr, pwd, usr_pub_key):
 
 	'''
 		:: usr :: the new user's usrname
 		:: pwd :: the new user's passwrd
-		
+		:: usr_pub_key :: the new user's public key
+
 		Creates a new user in the database.db file
 		calls `sql.py` add_user function
-		
+
 	'''
 
 	SQLOBJ.add_user(usr, pwd)
+	SQLOBJ.add_user_key(usr, usr_pub_key)
+
+	#print(SQLOBJ.get_pub_key(usr)[0]) # uncomment me for intermediate value
 
 	return page_view('registration_complete', user=usr)
 
 
+def get_users():
 
+	usr_ls = SQLOBJ.get_users()
 
+	return page_view('users', users=usr_ls)
 
 
 
