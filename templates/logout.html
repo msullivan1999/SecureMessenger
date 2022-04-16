@@ -1,0 +1,15 @@
+<script>
+
+	if (sessionStorage.getItem('current_user') != null) {
+		// remove current user
+		sessionStorage.removeItem('current_user');
+	}
+	if (sessionStorage.getItem('usr_key') != null) {
+		// remove current user's public key
+		sessionStorage.removeItem('usr_key');
+	}
+
+	// console.log(sessionStorage.getItem('current_user'));
+
+</script>
+<p>Logged out successfully!</p>

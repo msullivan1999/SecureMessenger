@@ -1,0 +1,36 @@
+<!--
+From Python when loading the page,
+we should get the public key of the user we're messaging
+based off the URI requested and send back as parameter to this webpage:
+	{{recipient_key}}
+	{{recipient}}
+
+Now we can get the recipient 
+-->
+<script>
+	function send() {
+		var msg = document.getElementById("message");
+		var text = msg.value;
+		alert('Message to {{recipient}} from ' + sessionStorage.getItem("current_user") + ":\n" + text);
+		// encrypt
+		// set value of msg
+		// as encrypted text
+		// post request to controller.py
+	}
+</script>
+
+<p>
+
+<h3>
+	Message to {{recipient}} (pub key {{recipient_key[0][0]}})
+</h3>
+
+<form action="/message" method="post">
+    <br>
+    <textarea id="message" name="message" rows="4" cols="50">
+
+    </textarea>
+</br>
+    <input value="Send" type="submit" onclick="send()"/>
+</form>
+</p>
