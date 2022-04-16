@@ -159,6 +159,10 @@ def register_user(usr, pwd, usr_pub_key):
 
 	return page_view('registration_complete', user=usr)
 
+#-----------------------------------------------------------------------------
+# List of all users
+#-----------------------------------------------------------------------------
+
 
 def get_users():
 
@@ -166,10 +170,28 @@ def get_users():
 
 	return page_view('users', users=usr_ls)
 
+def post_users(user):
+	if user == None or user == "None":
+		return get_users()
+	# get the public key of the user
+	# whom we are sending to
+	# assume the public key has been set for the user in sessionStorage
+	pub_key = SQLOBJ.get_pub_key(user.strip())
+	return page_view(
+		'message',
+		recipient_key=pub_key,
+		recipient=user
+		)
 
+#-----------------------------------------------------------------------------
+# Logout
+#-----------------------------------------------------------------------------
 
+def logout():
+	return page_view('logout')
 
-
+#def message_page():
+#	return page_view('message')
 
 
 
