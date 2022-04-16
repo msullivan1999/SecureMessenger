@@ -50,9 +50,12 @@ class SQLDatabase():
 	# Default admin password
 	def database_setup(self, admin_password='admin'):
 
-		# Clear the database if needed
+		# Clear the db
 		self.execute("DROP TABLE IF EXISTS Users")
 		self.execute("DROP TABLE IF EXISTS Pubkeys")
+		self.execute("DROP TABLE IF EXISTS Messages")
+		self.execute("DROP TABLE IF EXISTS UserFriends")
+
 		self.commit()
 
 		# Create the users table
@@ -67,6 +70,19 @@ class SQLDatabase():
 		self.execute('''CREATE TABLE Pubkeys(
 			public_key INT,
 			username TEXT
+		)''')
+
+		self.execute('''CREATE TABLE Messages (
+			sender_pub_key INT,
+			nonce INT,
+			message TEXT
+		)''')
+
+		# The 'user' acts as a primary key
+		# and maps to the users in the 'Users' table
+		self.execute('''CREATE TABLE UserFriends (
+			user TEXT,
+			friend TEXT
 		)''')
 
 		self.commit()
@@ -159,12 +175,11 @@ class SQLDatabase():
 			return True
 		return False
 
-	'''
-
-	get public key of a user from username
-
-	'''
 	def get_pub_key(self, usr):
+		'''
+			get public key of a user from username
+		'''
+
 		query = '''
 			SELECT public_key FROM Pubkeys WHERE username = '{usr}'
 		'''
@@ -173,17 +188,35 @@ class SQLDatabase():
 		rows = self.cur.fetchall()
 		return rows
 
-	'''
-
-	Retrieve list of all users from database
-
-	'''
-
 	def get_users(self):
+		'''
+			Retrieve list of all users from database
+		'''
+
 		sql_query = 'SELECT username FROM Users WHERE admin=0'
 		self.execute(sql_query)
 		rows = self.cur.fetchall()
 		return rows
 
 
+	def add_to_friends(self, usr_a, usr_b):
 
+		'''
+			add usr_b into usr_a's friends ls
+		'''
+
+		cmd = '''
+			INSERT INTO UserFriends VALUES('{user_a}' , '{user_b}')
+		'''
+		# add b into a's friends ls
+		cmd = cmd.format(user_a=usr_a, user_b=usr_b)
+		self.execute(cmd)
+
+		# add a into b's friends ls (bidirectional)
+		cmd = cmd.format(user_a=usr_a, user_b=usr_b)
+		self.execute(cmd)
+
+
+	def insert_message(self, ciphertext, nonce, sender_public_key):
+		''' insert ciphertext into Messages table '''
+		pass
