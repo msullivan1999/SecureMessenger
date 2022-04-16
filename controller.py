@@ -161,6 +161,12 @@ def post_register():
     # Call the appropriate method
     return model.register_user(username, password, pub_key)
 
+#-----------------------------------------------------------------------------
+
+
+@get('/logout')
+def logout():
+	return model.logout()
 
 #-----------------------------------------------------------------------------
 
@@ -172,12 +178,23 @@ def get_users():
     return model.get_users()
 
 
+# handle post-request from users
 @post('/users')
-def get_users(friend):
-	pass
+def get_users():
+	user = request.forms.get('message')
 
+	print(user)
 
+	return model.post_users(user)
 
+#-----------------------------------------------------------------------------
+#@get('/message')
+#def message_user():
+#	'''
+#		Take em to the messaging page
+#	'''
+#	print("messaging")
+#	return model.message_page()
 
 
 
