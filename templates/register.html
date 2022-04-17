@@ -19,7 +19,7 @@ so that it's used as a public key
 
 'g' and 'p' are fixed:
 g = 2
-p = 412435055367701 (prime)
+p = 17 (prime)
 -->
 
 
@@ -35,9 +35,9 @@ function foo() {
 	*/
 
 	var hidden = document.getElementById("pub_id");
-	var min = 1; var max = 500; // note that this only supports 500 users at one time
+	var min = 1; var max = 50; // note that this only supports 500 users at one time
 	var priv_a = Math.floor((Math.random() * (max - min + 1) + min));
-	var pub_key = Math.pow(2, priv_a)%412435055367701;
+	var pub_key = Math.pow(2, priv_a)%17;
 
 	console.log("public key: ".concat(pub_key));
 	hidden.value = pub_key;

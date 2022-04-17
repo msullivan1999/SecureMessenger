@@ -10,8 +10,20 @@ Now we can get the recipient
 <script>
 	function send() {
 		var msg = document.getElementById("message");
-		var text = msg.value;
-		alert('Message to {{recipient}} from ' + sessionStorage.getItem("current_user") + ":\n" + text);
+        var text = msg.value;
+
+        publicKey = Number(sessionStorage.getItem('usr_key'))
+        privateKey = Number(sessionStorage.getItem(publicKey))
+        console.log("Private Key " + privateKey)
+        recipientKey = Number('{{recipient_key[0][0]}}')
+        console.log("recipeint key " + recipientKey)
+
+        // create session key
+        var sessionKey = Math.pow(recipientKey, privateKey)%17;
+        console.log("session key " + sessionKey)
+
+        alert('Message to {{recipient}} from ' + sessionStorage.getItem("current_user") + ":\n" + text);
+
 		// encrypt
 		// set value of msg
 		// as encrypted text
