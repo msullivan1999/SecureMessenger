@@ -21,13 +21,8 @@ p = 17
 		var sender_public = sessionStorage.getItem('usr_key');
 		var sender_priv = new Big( sessionStorage.getItem( sender_public ).toString() );
 		var recipient_pub = new Big('{{recipient_key[0][0]}}');
-<<<<<<< HEAD
-		var shared = recipient_pub.pow(parseInt(sender_priv)).mod(p);
-		// var shared = recipient_pub.pow(sender_priv).mod(17); // (Math.pow(recipient_pub, priv))%17;
-=======
 		var shared = recipient_pub.pow(parseInt(sender_priv)).mod(17);
 
->>>>>>> will
 		console.log(
 			'recipient: ' + '{{recipient}}' +
 			'\nsender:' + sessionStorage.getItem('current_user') + 

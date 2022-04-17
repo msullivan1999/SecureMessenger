@@ -74,11 +74,7 @@ class SQLDatabase():
 
 		self.execute('''CREATE TABLE Messages (
 			sender_pub_key INT,
-<<<<<<< HEAD
 			receiver_pub_key INT,
-=======
-			recipient TEXT,
->>>>>>> will
 			nonce INT,
 			message TEXT
 		)''')
@@ -244,7 +240,7 @@ class SQLDatabase():
 			WHERE receiver_pub_key={sender_pub_key} AND sender_pub_key={sender_pub_key}
 		'''
 
-		sql_query = sql_query.format(receiver_pub_key=sender_pub_key, sender_pub_key=sender_pub_key)
+		sql_query = sql_query.format(receiver_pub_key=sender_pub_key, sender_pub_key=receiver_pub_key)
 		
 		self.execute(sql_query)
 		rows = self.cur.fetchall()
