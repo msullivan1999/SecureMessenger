@@ -34,7 +34,7 @@ import controller
 host = 'localhost'
 
 # Test port, change to the appropriate port to host
-port = 8081
+port = 8082
 
 # Turn this off for production
 debug = True
@@ -44,11 +44,7 @@ def run_server():
         run_server
         Runs a bottle server
     '''
-    run(host=host, port=port, 
-    debug=debug, server='gunicorn',
-    certfile='info2222.test.crt',
-    keyfile='info2222.test.key'
-    )
+    run(host=host, port=port, debug=debug, server='gunicorn', keyfile='./certs/info2222.test.key', certfile='./certs/info2222.test.crt')
 
 #-----------------------------------------------------------------------------
 # Optional SQL support
