@@ -155,7 +155,7 @@ def register_user(usr, pwd, usr_pub_key):
 	SQLOBJ.add_user(usr, pwd)
 	SQLOBJ.add_user_key(usr, usr_pub_key)
 
-	#print(SQLOBJ.get_pub_key(usr)[0]) # uncomment me for intermediate value
+	print(SQLOBJ.get_pub_key(usr)[0]) # uncomment me for intermediate value
 
 	return page_view('registration_complete', user=usr)
 
