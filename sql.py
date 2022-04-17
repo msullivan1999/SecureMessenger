@@ -74,6 +74,7 @@ class SQLDatabase():
 
 		self.execute('''CREATE TABLE Messages (
 			sender_pub_key INT,
+			recipient TEXT,
 			nonce INT,
 			message TEXT
 		)''')

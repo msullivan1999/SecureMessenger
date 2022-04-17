@@ -20,7 +20,7 @@ p = 17
 		var sender_priv = new Big( sessionStorage.getItem( sender_public ).toString() );
 		var recipient_pub = new Big('{{recipient_key[0][0]}}');
 		var shared = recipient_pub.pow(parseInt(sender_priv)).mod(17);
-		// var shared = recipient_pub.pow(sender_priv).mod(17); // (Math.pow(recipient_pub, priv))%17;
+
 		console.log(
 			'recipient: ' + '{{recipient}}' +
 			'\nsender:' + sessionStorage.getItem('current_user') + 
@@ -29,17 +29,17 @@ p = 17
 			'\nsender private: ' + sender_priv
 		);
 		shared = parseInt(shared.toString());
-		console.log(shared);
-		console.log(text);
+		// console.log(shared);
+		// console.log(text);
 		// encrypt
 		var ciphertext = CryptoJS.AES.encrypt(text.toString(), shared.toString());
-		console.log(ciphertext.toString());
-		ciphertext = CryptoJS.AES.decrypt(ciphertext, shared.toString());
-		console.log(ciphertext.toString(CryptoJS.enc.Utf8));
-		// set value of msg
-		// as encrypted text
-		// post request to controller.py
-		alert("stop")
+
+		// console.log(ciphertext.toString()); // encrypts fine
+		// ciphertext = CryptoJS.AES.decrypt(ciphertext, shared.toString());
+		// console.log(ciphertext.toString(CryptoJS.enc.Utf8)); // decrypts fine
+
+		// set ciphertext content to send back 2 da servr hehe ;)
+		document.getElementById("ciphertext").value = ciphertext.toString();
 	}
 </script>
 
@@ -50,11 +50,13 @@ p = 17
 </h3>
 
 <form action="/message" method="post">
-    <br>
+ <br>
     <textarea id="message" name="message" rows="4" cols="50">
 
     </textarea>
-</br>
+ <br>
+    <input type="hidden" id="ciphertext" name="ciphertext"/>
+ </br>
     <input value="Send" type="submit" onclick="send()"/>
 </form>
 </p>
