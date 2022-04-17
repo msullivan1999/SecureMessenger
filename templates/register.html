@@ -35,9 +35,9 @@ function foo() {
 	*/
 
 	var hidden = document.getElementById("pub_id");
-	var min = 1; var max = 50; // note that this only supports 50 users at one time
+	var min = 1; var max =14; // note that this only supports 14 users at one time
 	var priv_a = Math.floor((Math.random() * (max - min + 1) + min));
-	var pub_key = Math.pow(2, priv_a)%19;
+	var pub_key = Math.pow(2, priv_a)%11;
 
 	console.log("public key: ".concat(pub_key));
 	hidden.value = pub_key;
