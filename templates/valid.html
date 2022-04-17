@@ -1,2 +1,21 @@
+<p>Welcome, {{name}}! Public key {{key}}</p>
+<!--
+Display list of messages to other users
+Display friends list
+-->
 <p>We need to display friends list here</p>
 <p>fetch list from server</p>
+
+<script>
+
+	// gets the private key of the user currently logged in
+	// console.log(sessionStorage.getItem({{key}}));
+	// console.log('{{name}}' + ' just logged in');
+
+	// set the user that's logged in, in this session
+	sessionStorage.setItem('current_user', '{{name}}');
+
+	// set pub key of the user logged in
+	sessionStorage.setItem('usr_key', {{key}});
+
+</script>

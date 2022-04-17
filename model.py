@@ -60,8 +60,14 @@ def login_check(username, password):
 
     err_str = "incorrect user and password combination"
     
-    if login: 
-        return page_view("valid", name=username)
+    if login:
+        # get the public key of the valid user and
+        # send to the page
+        # we assume usernames are unique
+        key = 0
+        if username != 'admin':
+	        key = SQLOBJ.get_pub_key(username)
+        return page_view("valid", name=username, key=key[0][0])
     else:
         return page_view("invalid", reason=err_str)
 
@@ -134,29 +140,74 @@ def get_register():
 
 # taking register details
 
-def register_user(usr, pwd):
+def register_user(usr, pwd, usr_pub_key):
 
 	'''
 		:: usr :: the new user's usrname
 		:: pwd :: the new user's passwrd
-		
+		:: usr_pub_key :: the new user's public key
+
 		Creates a new user in the database.db file
 		calls `sql.py` add_user function
-		
+
 	'''
 
 	SQLOBJ.add_user(usr, pwd)
+	SQLOBJ.add_user_key(usr, usr_pub_key)
+
+	print(SQLOBJ.get_pub_key(usr)[0]) # uncomment me for intermediate value
 
 	return page_view('registration_complete', user=usr)
 
+#-----------------------------------------------------------------------------
+# List of all users
+#-----------------------------------------------------------------------------
 
 
+def get_users():
 
+	usr_ls = SQLOBJ.get_users()
 
+	return page_view('users', users=usr_ls)
 
+def post_users(user):
+	if user == None or user == "None":
+		return get_users()
+	# get the public key of the user
+	# whom we are sending to
+	# assume the public key has been set for the user in sessionStorage
+	pub_key = SQLOBJ.get_pub_key(user.strip())
+	return page_view(
+		'message',
+		recipient_key=pub_key,
+		recipient=user
+		)
 
+#-----------------------------------------------------------------------------
+# Logout
+#-----------------------------------------------------------------------------
 
+def logout():
+	return page_view('logout')
 
+#-----------------------------------------------------------------------------
+# Msg part
+#-----------------------------------------------------------------------------
+
+def insert_msg_ciphertext(ciphertext):
+	'''
+		insert the msg ciphertext in SQL database.db
+		rows: [sender_pub_key INT] [recipient TEXT] [nonce INT] [ciphertext TEXT]
+		whenever we want to display the messages for a certain user:
+			1. pull all messages associated with a recipient (user)
+			2. Decrypt using sender_pub_key and the user's priv. key (stored in sessionStorage.getItem(sessionStorage.getItem('usr_key')))
+			3. Display all decrypted messages (messages should make sense)
+	'''
+
+	return page_view('message_sucesss')
+
+#def message_page():
+#	return page_view('message')
 
 
 

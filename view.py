@@ -3,6 +3,7 @@
 # You can find a fuller explanation for this file in the README file
 #-----------------------------------------------------------------------------
 
+from bottle import SimpleTemplate
 import string
 
 class View():
@@ -101,8 +102,8 @@ class View():
             :: template :: The template to use
             :: kwargs :: A dictionary of key value pairs to pass to the template
         '''
-        template = string.Template(template)
-        template = template.safe_substitute(**kwargs)
+        template = SimpleTemplate(template)
+        template = template.render(**kwargs)
         return  template
 
 

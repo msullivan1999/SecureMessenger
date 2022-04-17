@@ -1,0 +1,62 @@
+<!--
+From Python when loading the page,
+we should get the public key of the user we're messaging
+based off the URI requested and send back as parameter to this webpage:
+	{{recipient_key}}
+	{{recipient}}
+
+Now we can get the recipient 
+g = 2
+p = 17
+-->
+<script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
+<script>
+	function send() {
+		var msg = document.getElementById("message");
+		var text = msg.value;
+		var sender_public = sessionStorage.getItem('usr_key');
+		var sender_priv = new Big( sessionStorage.getItem( sender_public ).toString() );
+		var recipient_pub = new Big('{{recipient_key[0][0]}}');
+		var shared = recipient_pub.pow(parseInt(sender_priv)).mod(17);
+
+		console.log(
+			'recipient: ' + '{{recipient}}' +
+			'\nsender:' + sessionStorage.getItem('current_user') + 
+			"\nrecipient public: " + recipient_pub + 
+			'\nsender public: ' + sender_public + 
+			'\nsender private: ' + sender_priv
+		);
+		shared = parseInt(shared.toString());
+		// console.log(shared);
+		// console.log(text);
+		// encrypt
+		var ciphertext = CryptoJS.AES.encrypt(text.toString(), shared.toString());
+
+		// console.log(ciphertext.toString()); // encrypts fine
+		// ciphertext = CryptoJS.AES.decrypt(ciphertext, shared.toString());
+		// console.log(ciphertext.toString(CryptoJS.enc.Utf8)); // decrypts fine
+
+		// set ciphertext content to send back 2 da servr hehe ;)
+		document.getElementById("ciphertext").value = ciphertext.toString();
+	}
+</script>
+
+<p>
+
+<h3>
+	Message to {{recipient}} (pub key {{recipient_key[0][0]}})
+</h3>
+
+<form action="/message" method="post">
+ <br>
+    <textarea id="message" name="message" rows="4" cols="50">
+
+    </textarea>
+ <br>
+    <input type="hidden" id="ciphertext" name="ciphertext"/>
+ </br>
+    <input value="Send" type="submit" onclick="send()"/>
+</form>
+</p>

@@ -1,0 +1,36 @@
+
+<h2>Users</h2>
+
+<script type="text/javascript">
+	foo = function(btn) {
+		// console.log('User being messaged: ' + btn.id);
+		// console.log('User logged in: ' + sessionStorage.getItem('current_user'));
+		console.log(sessionStorage.getItem('current_user'));
+		// current_user is maintained null/not null by use of logout or not
+		if (
+			(sessionStorage.getItem('current_user') == null)
+		)
+		{ // no one's logged in
+			alert("You must be logged in to message someone");
+			btn.id="null";
+			btn.name="null";
+		} 
+	}
+</script>
+
+<table class="styled" id ="usrtable">
+    <thead>
+    </thead>
+    <tbody>
+        % for i in range(len(users)):
+        <tr>
+            <td>{{ users[i][0] }}</td>
+            <td>
+            	<form action="/users" method="post">
+            	<button type="submit" id="message" name="message" onclick="foo(this)" value="{{users[i][0]}}">Message Me</button>
+            	</form>
+            </td>
+        </tr>
+        % end
+    </tbody>
+</table>

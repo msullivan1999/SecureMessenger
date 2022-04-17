@@ -154,21 +154,54 @@ def post_register():
     # Handle the form processing
     username = request.forms.get('username')
     password = request.forms.get('password')
-    
+
+    # usr public key -- pass this off to model.register_user
+    pub_key = request.forms.get('pub_id')
+
     # Call the appropriate method
-    return model.register_user(username, password)
+    return model.register_user(username, password, pub_key)
+
+#-----------------------------------------------------------------------------
 
 
+@get('/logout')
+def logout():
+	return model.logout()
+
+#-----------------------------------------------------------------------------
+
+@get('/users')
+def get_users():
+    # returns the page of the users
+    # currently stored in the system
+    # which aren't an admin
+    return model.get_users()
 
 
+# handle post-request from users
+@post('/users')
+def get_users():
+	user = request.forms.get('message')
 
+	print(user)
 
+	return model.post_users(user)
 
+#-----------------------------------------------------------------------------
+@post('/message')
+def get_message_ciphertext():
+	cipher = request.forms.get('ciphertext')
+	print(cipher)
+	return model.insert_msg_ciphertext(cipher)
 
-
-
-
-
+#-----------------------------------------------------------------------------
+#@get('/message')
+#def message_user():
+#	'''
+#		Take em to the messaging page
+#	'''
+#	print("messaging")
+#	return model.message_page()
 
 
 

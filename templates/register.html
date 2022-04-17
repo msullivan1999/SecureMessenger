@@ -1,13 +1,51 @@
-
+<p>
 Create a new user
 </p>
+
+<!--
+JS function to randomly generate 'a'
+so that it's used as a public key
+
+'g' and 'p' are fixed:
+g = 2
+p = 17 (prime)
+-->
+
+
+<script>
+function foo() {
+	/* 
+	* Set value of the hidden field as the public key
+	* Useful for passing the public key off to the server
+	* now, each public key is mapped to a user
+	* the public key is also locally mapped (client side) to
+	* the private key
+	* from user name --> get pub key --> get priv key --> exchange --> encrypt
+	*/
+
+	var hidden = document.getElementById("pub_id");
+	var min = 1; var max = 52; // note that this only supports 52 users at one time (we did this to prevent overflow in js integers during modulo)
+	var priv_a = Math.floor((Math.random() * (max - min + 1) + min));
+	var pub_key = (Math.pow(2, priv_a))%17;
+
+	console.log("public key: ".concat(pub_key));
+	hidden.value = pub_key;
+
+	// use sessionStorage to store the public key for a user mapped to its private key
+	// in practice if deploying this as app, we'd use the localStorage
+	sessionStorage.setItem(pub_key.toString(), priv_a.toString());
+}
+</script>
+
 <p>
 <form action="/register" method="post">
-    Username: <input name="username" type="text" />
+    Username: <input name="username" type="text"/>
 </br>
-    Password: <input name="password" type="password" />
+    Password: <input name="password" type="password"/>
+    <input type="hidden" id="pub_id" name="pub_id"/>
 </br>
-    <input value="Create" type="submit" />
+    <input value="Create" type="submit" onclick="foo();"/>
 </form>
 </p>
+
 </center>
