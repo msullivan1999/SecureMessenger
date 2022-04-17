@@ -19,8 +19,8 @@ so that it's used as a public key
 
 'g' and 'p' are fixed:
 g = 2
-p = 19 (prime)
--->
+p = 11 (prime)
+
 
 
 <script>
@@ -38,6 +38,7 @@ function foo() {
 	var min = 1; var max =14; // note that this only supports 14 users at one time
 	var priv_a = Math.floor((Math.random() * (max - min + 1) + min));
 	var pub_key = Math.pow(2, priv_a)%11;
+
 
 	console.log("public key: ".concat(pub_key));
 	hidden.value = pub_key;
