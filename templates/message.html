@@ -11,6 +11,8 @@ p = 17
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
 <script>
 	function send() {
 		var p = 17;
@@ -28,23 +30,18 @@ p = 17
 			'\nsender public: ' + sender_public + 
 			'\nsender private: ' + sender_priv
 		);
-		console.log(parseInt(shared.toString()));
-
-		// console.log(shared);
+		shared = parseInt(shared.toString());
+		console.log(shared);
+		console.log(text);
 		// encrypt
+		var ciphertext = CryptoJS.AES.encrypt(text.toString(), shared.toString());
+		console.log(ciphertext.toString());
+		ciphertext = CryptoJS.AES.decrypt(ciphertext, shared.toString());
+		console.log(ciphertext.toString(CryptoJS.enc.Utf8));
 		// set value of msg
 		// as encrypted text
 		// post request to controller.py
-		let asciiArray = [];
-		for (var i = 0; i < msg.length; i++) {
-			console.log("got here")
-  			asciiCode = msg.charCodeAt(i);
-			encAscii = (asciiCode*shared)%p
-			asciiArray.push(encAscii)
-		}
-		console.log(asciiArray)
-		alert(this)
-
+		alert("stop")
 	}
 </script>
 
