@@ -220,3 +220,10 @@ class SQLDatabase():
 	def insert_message(self, ciphertext, nonce, sender_public_key):
 		''' insert ciphertext into Messages table '''
 		pass
+		
+	def get_message(self, sender_pub_key):
+		sql_query = ''
+		messages = [] # list of messages here
+		return messages
+		
+		
