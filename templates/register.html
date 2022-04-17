@@ -13,31 +13,31 @@ Create a new user
 </form>
 </p>
 
-<!--
+<!-- <!--
 JS function to randomly generate 'a'
 so that it's used as a public key
 
 'g' and 'p' are fixed:
 g = 2
-p = 11 (prime)
+p = 11 (prime) -->
 
 
 
 <script>
 function foo() {
-	/* 
-	* Set value of the hidden field as the public key
-	* Useful for passing the public key off to the server
-	* now, each public key is mapped to a user
-	* the public key is also locally mapped (client side) to
-	* the private key
-	* from user name --> get pub key --> get priv key --> exchange --> encrypt
-	*/
+	// /* 
+	// * Set value of the hidden field as the public key
+	// * Useful for passing the public key off to the server
+	// * now, each public key is mapped to a user
+	// * the public key is also locally mapped (client side) to
+	// * the private key
+	// * from user name --> 
+	// get pub key -->
 
 	var hidden = document.getElementById("pub_id");
-	var min = 1; var max =14; // note that this only supports 14 users at one time
+	var min = 1; var max = 52; // note that this only supports 14 users at one time
 	var priv_a = Math.floor((Math.random() * (max - min + 1) + min));
-	var pub_key = Math.pow(2, priv_a)%11;
+	var pub_key = Math.pow(2, priv_a)%17;
 
 
 	console.log("public key: ".concat(pub_key));
