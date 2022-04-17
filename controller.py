@@ -188,6 +188,13 @@ def get_users():
 	return model.post_users(user)
 
 #-----------------------------------------------------------------------------
+@post('/message')
+def get_message_ciphertext():
+	cipher = request.forms.get('ciphertext')
+	print(cipher)
+	return model.insert_msg_ciphertext(cipher)
+
+#-----------------------------------------------------------------------------
 #@get('/message')
 #def message_user():
 #	'''

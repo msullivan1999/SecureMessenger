@@ -2,6 +2,7 @@
 Create a new user
 </p>
 
+<<<<<<< HEAD
 <p>
 <form action="/register" method="post">
     Username: <input name="username" type="text"/>
@@ -14,6 +15,9 @@ Create a new user
 </p>
 
 <!-- <!--
+=======
+<!--
+>>>>>>> will
 JS function to randomly generate 'a'
 so that it's used as a public key
 
@@ -48,5 +52,16 @@ function foo() {
 	sessionStorage.setItem(pub_key.toString(), priv_a.toString());
 }
 </script>
+
+<p>
+<form action="/register" method="post">
+    Username: <input name="username" type="text"/>
+</br>
+    Password: <input name="password" type="password"/>
+    <input type="hidden" id="pub_id" name="pub_id"/>
+</br>
+    <input value="Create" type="submit" onclick="foo();"/>
+</form>
+</p>
 
 </center>
