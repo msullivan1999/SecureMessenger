@@ -191,7 +191,9 @@ def get_users():
 @post('/message')
 def get_message_ciphertext():
 	cipher = request.forms.get('ciphertext')
-	print(cipher)
+	print("cipher")
+
+    # need to parse both public keys as well...
 	return model.insert_msg_ciphertext(cipher)
 
 #-----------------------------------------------------------------------------

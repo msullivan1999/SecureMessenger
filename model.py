@@ -194,7 +194,7 @@ def logout():
 # Msg part
 #-----------------------------------------------------------------------------
 
-def insert_msg_ciphertext(ciphertext):
+def insert_msg_ciphertext(ciphertext, sender_pub_key, receiver_pub_key):
 	'''
 		insert the msg ciphertext in SQL database.db
 		rows: [sender_pub_key INT] [recipient TEXT] [nonce INT] [ciphertext TEXT]
@@ -203,6 +203,8 @@ def insert_msg_ciphertext(ciphertext):
 			2. Decrypt using sender_pub_key and the user's priv. key (stored in sessionStorage.getItem(sessionStorage.getItem('usr_key')))
 			3. Display all decrypted messages (messages should make sense)
 	'''
+
+    SQLOBJ.insert_message(ciphertext, nonce, sender_pub_key, receiver_pub_key)
 
 	return page_view('message_sucesss')
 
