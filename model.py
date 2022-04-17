@@ -190,6 +190,22 @@ def post_users(user):
 def logout():
 	return page_view('logout')
 
+#-----------------------------------------------------------------------------
+# Msg part
+#-----------------------------------------------------------------------------
+
+def insert_msg_ciphertext(ciphertext):
+	'''
+		insert the msg ciphertext in SQL database.db
+		rows: [sender_pub_key INT] [recipient TEXT] [nonce INT] [ciphertext TEXT]
+		whenever we want to display the messages for a certain user:
+			1. pull all messages associated with a recipient (user)
+			2. Decrypt using sender_pub_key and the user's priv. key (stored in sessionStorage.getItem(sessionStorage.getItem('usr_key')))
+			3. Display all decrypted messages (messages should make sense)
+	'''
+
+	return page_view('message_sucesss')
+
 #def message_page():
 #	return page_view('message')
 
