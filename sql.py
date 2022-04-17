@@ -74,6 +74,7 @@ class SQLDatabase():
 
 		self.execute('''CREATE TABLE Messages (
 			sender_pub_key INT,
+			receiver_pub_key INT,
 			nonce INT,
 			message TEXT
 		)''')
@@ -217,13 +218,34 @@ class SQLDatabase():
 		self.execute(cmd)
 
 
-	def insert_message(self, ciphertext, nonce, sender_public_key):
-		''' insert ciphertext into Messages table '''
-		pass
+	def insert_message(self, ciphertext, nonce, sender_public_key, receiver_pub_key):
+
+		sql_cmd='''
+			INSERT INTO Messages
+			VALUES({sender_public_key}, {receiver_pub_key}, {nonce}, '{ciphertext}')
+		'''
+
+		sql_cmd = sql_cmd.format(sender_public_key=sender_public_key, receiver_pub_key=receiver_pub_key, nonce=nonce, ciphertext=ciphertext)
+
+		self.execute(sql_cmd)
+		self.commit()
+		return True
+
 		
-	def get_message(self, sender_pub_key):
-		sql_query = ''
-		messages = [] # list of messages here
+	def get_message(self, sender_pub_key, receiver_pub_key):
+
+		sql_query='''
+			SELECT *
+			FROM Messages
+			WHERE receiver_pub_key={sender_pub_key} AND sender_pub_key={sender_pub_key}
+		'''
+
+		sql_query = sql_query.format(receiver_pub_key=sender_pub_key, sender_pub_key=sender_pub_key)
+		
+		self.execute(sql_query)
+		rows = self.cur.fetchall()
+		messages = rows[3]
+
 		return messages
 		
 		
