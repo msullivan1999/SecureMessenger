@@ -13,12 +13,13 @@ p = 17
 <script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
 <script>
 	function send() {
+		var p = 17;
 		var msg = document.getElementById("message");
 		var text = msg.value;
 		var sender_public = sessionStorage.getItem('usr_key');
 		var sender_priv = new Big( sessionStorage.getItem( sender_public ).toString() );
 		var recipient_pub = new Big('{{recipient_key[0][0]}}');
-		var shared = recipient_pub.pow(parseInt(sender_priv)).mod(17);
+		var shared = recipient_pub.pow(parseInt(sender_priv)).mod(p);
 		// var shared = recipient_pub.pow(sender_priv).mod(17); // (Math.pow(recipient_pub, priv))%17;
 		console.log(
 			'recipient: ' + '{{recipient}}' +
@@ -29,12 +30,21 @@ p = 17
 		);
 		console.log(parseInt(shared.toString()));
 
-		alert("this")
 		// console.log(shared);
 		// encrypt
 		// set value of msg
 		// as encrypted text
 		// post request to controller.py
+		let asciiArray = [];
+		for (var i = 0; i < msg.length; i++) {
+			console.log("got here")
+  			asciiCode = msg.charCodeAt(i);
+			encAscii = (asciiCode*shared)%p
+			asciiArray.push(encAscii)
+		}
+		console.log(asciiArray)
+		alert(this)
+
 	}
 </script>
 
