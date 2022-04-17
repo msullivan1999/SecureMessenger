@@ -19,7 +19,7 @@ Now we can get the recipient
         console.log("recipeint key " + recipientKey)
 
         // create session key
-        var sessionKey = Math.pow(recipientKey, privateKey)%17;
+        var sessionKey = Math.pow(recipientKey, privateKey)%3571;
         console.log("session key " + sessionKey)
 
         alert('Message to {{recipient}} from ' + sessionStorage.getItem("current_user") + ":\n" + text);
