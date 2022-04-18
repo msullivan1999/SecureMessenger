@@ -1,16 +1,19 @@
 <p>Welcome, {{name}}! Public key {{key}}</p>
 <!--
 Display list of messages to other users
+Decrypt as we go
 Display friends list
 -->
-<p>We need to display friends list here</p>
-<p>fetch list from server</p>
+
+<script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script src="js/decrypt.js"></script>
 
 <script>
 
 	// gets the private key of the user currently logged in
-	// console.log(sessionStorage.getItem({{key}}));
-	// console.log('{{name}}' + ' just logged in');
+	console.log(sessionStorage.getItem({{key}}));
+	console.log('{{name}}' + ' just logged in');
 
 	// set the user that's logged in, in this session
 	sessionStorage.setItem('current_user', '{{name}}');
@@ -19,3 +22,52 @@ Display friends list
 	sessionStorage.setItem('usr_key', {{key}});
 
 </script>
+
+<script>
+	function foo(sender_public_key, nonce, ciphertext, i) {
+		var t = document.getElementById(i);
+		
+		var recipient_public = sessionStorage.getItem('usr_key');
+		var recipient_priv = new Big( sessionStorage.getItem( recipient_public ).toString() );
+		var sender_pub = new Big(sender_public_key);
+		var shared = sender_pub.pow(parseInt(recipient_priv)).mod(17);
+		var decrypted = CryptoJS.AES.decrypt(ciphertext, shared.toString() + nonce);
+
+		t.textContent = decrypted.toString(CryptoJS.enc.Utf8);
+	}
+</script>
+
+<h3>Messages</h3>
+<table class="styled" id ="msgtable">
+    <thead>
+    	<td>From</td>
+    	<td>Message</td>
+    </thead>
+    <tbody>
+        % for i in range(len(msg)):
+        <tr>
+        		<td>{{msg[i][0]}}</td>
+        		<td id={{i}}>
+        			<script>
+        				foo('{{msg[i][0]}}', '{{msg[i][2]}}', '{{msg[i][3]}}', '{{i}}');
+        			</script>
+        		</td>
+        </tr>
+        % end
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
