@@ -72,10 +72,12 @@ class SQLDatabase():
 			username TEXT
 		)''')
 
+		# nonce is a hexstring APPENDED to the end of the
+		# shared key
 		self.execute('''CREATE TABLE Messages (
 			sender_pub_key INT,
 			recipient TEXT,
-			nonce INT,
+			nonce TEXT,
 			message TEXT
 		)''')
 
@@ -218,13 +220,37 @@ class SQLDatabase():
 		self.execute(cmd)
 
 
-	def insert_message(self, ciphertext, nonce, sender_public_key):
+	def insert_message(self, sender_public_key, recipient, nonce, ciphertext):
 		''' insert ciphertext into Messages table '''
-		pass
+		cmd = '''
+		INSERT INTO Messages VALUES(
+				{sender_pub_key},
+				'{recipient}',
+				'{nonce}',
+				'{message}')
+		'''
+		cmd = cmd.format(
+			sender_pub_key=sender_public_key,
+			recipient=recipient,
+			nonce=nonce,
+			message=ciphertext
+			)
+		self.execute(cmd)
 		
 	def get_message(self, sender_pub_key):
-		sql_query = ''
-		messages = [] # list of messages here
+		query = ''' SELECT * FROM Messages WHERE sender_pub_key = {sender_pub_key}
+		'''
+		query = query.format(sender_pub_key=sender_pub_key)
+		self.execute(query)
+		messages = self.cur.fetchall() # list of messages here
 		return messages
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		

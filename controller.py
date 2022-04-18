@@ -188,11 +188,25 @@ def get_users():
 	return model.post_users(user)
 
 #-----------------------------------------------------------------------------
+
+# get message ciphertext & insert as row
+# into the Message table in database.db
 @post('/message')
 def get_message_ciphertext():
+
 	cipher = request.forms.get('ciphertext')
-	print(cipher)
-	return model.insert_msg_ciphertext(cipher)
+	recipient = request.forms.get('recipient')
+	pub_key = request.forms.get('sender_pub_key')
+	nonce = request.forms.get('nonce')
+
+	print(cipher, '\n', recipient, '\n', pub_key, '\n', nonce, sep='')
+
+	return model.insert_msg_ciphertext(
+		sender_pub_key = pub_key,
+		ciphertext = cipher,
+		recipient = recipient,
+		nonce = nonce
+	)
 
 #-----------------------------------------------------------------------------
 #@get('/message')

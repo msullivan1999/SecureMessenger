@@ -7,6 +7,7 @@
 '''
 import view
 import random
+import uuid
 from sql import SQLDatabase
 
 # Initialise our views, all arguments are defaults for the template
@@ -177,10 +178,14 @@ def post_users(user):
 	# whom we are sending to
 	# assume the public key has been set for the user in sessionStorage
 	pub_key = SQLOBJ.get_pub_key(user.strip())
+	# nonce is hex string --> append to end of
+	# shared key
+	nonce = uuid.uuid4().hex
 	return page_view(
 		'message',
 		recipient_key=pub_key,
-		recipient=user
+		recipient=user,
+		nonce=nonce
 		)
 
 #-----------------------------------------------------------------------------
@@ -194,7 +199,7 @@ def logout():
 # Msg part
 #-----------------------------------------------------------------------------
 
-def insert_msg_ciphertext(ciphertext):
+def insert_msg_ciphertext(sender_pub_key, recipient=None, nonce=-1, ciphertext=None):
 	'''
 		insert the msg ciphertext in SQL database.db
 		rows: [sender_pub_key INT] [recipient TEXT] [nonce INT] [ciphertext TEXT]
@@ -203,7 +208,9 @@ def insert_msg_ciphertext(ciphertext):
 			2. Decrypt using sender_pub_key and the user's priv. key (stored in sessionStorage.getItem(sessionStorage.getItem('usr_key')))
 			3. Display all decrypted messages (messages should make sense)
 	'''
-
+	
+	SQLOBJ.insert_message(int(sender_pub_key), recipient, nonce, ciphertext)
+	
 	return page_view('message_sucesss')
 
 #def message_page():
