@@ -68,7 +68,14 @@ def login_check(username, password):
         key = 0
         if username != 'admin':
 	        key = SQLOBJ.get_pub_key(username)
-        return page_view("valid", name=username, key=key[0][0])
+	        msg = SQLOBJ.get_message(username)
+	        print(msg)
+	        print(len(msg))
+        return page_view("valid",
+        name=username,
+        key=key[0][0],
+        msg=msg,
+        n=len(msg))
     else:
         return page_view("invalid", reason=err_str)
 

@@ -237,10 +237,13 @@ class SQLDatabase():
 			)
 		self.execute(cmd)
 		
-	def get_message(self, sender_pub_key):
-		query = ''' SELECT * FROM Messages WHERE sender_pub_key = {sender_pub_key}
+	def get_message(self, recipient):
 		'''
-		query = query.format(sender_pub_key=sender_pub_key)
+			get messages for a particular recipient
+		'''
+		query = ''' SELECT * FROM Messages WHERE recipient = '{recipient}'
+		'''
+		query = query.format(recipient=recipient)
 		self.execute(query)
 		messages = self.cur.fetchall() # list of messages here
 		return messages
