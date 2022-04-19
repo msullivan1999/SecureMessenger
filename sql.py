@@ -76,6 +76,7 @@ class SQLDatabase():
 		# shared key
 		self.execute('''CREATE TABLE Messages (
 			sender_pub_key INT,
+			sender TEXT,
 			recipient TEXT,
 			nonce TEXT,
 			message TEXT
@@ -91,7 +92,7 @@ class SQLDatabase():
 		self.commit()
 
 		# Add our admin user
-		self.add_user(username='admin', password=admin_password, admin=1)
+		# self.add_user(username='admin', password=admin_password, admin=1)
 
 	#-----------------------------------------------------------------------------
 	# User handling
@@ -220,17 +221,19 @@ class SQLDatabase():
 		self.execute(cmd)
 
 
-	def insert_message(self, sender_public_key, recipient, nonce, ciphertext):
+	def insert_message(self, sender_public_key, recipient, nonce, ciphertext, sender):
 		''' insert ciphertext into Messages table '''
 		cmd = '''
 		INSERT INTO Messages VALUES(
 				{sender_pub_key},
+				'{sender}',
 				'{recipient}',
 				'{nonce}',
 				'{message}')
 		'''
 		cmd = cmd.format(
 			sender_pub_key=sender_public_key,
+			sender = sender,
 			recipient=recipient,
 			nonce=nonce,
 			message=ciphertext

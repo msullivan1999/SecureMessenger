@@ -65,12 +65,8 @@ def login_check(username, password):
         # get the public key of the valid user and
         # send to the page
         # we assume usernames are unique
-        key = 0
-        if username != 'admin':
-	        key = SQLOBJ.get_pub_key(username)
-	        msg = SQLOBJ.get_message(username)
-	        print(msg)
-	        print(len(msg))
+        key = SQLOBJ.get_pub_key(username)
+        msg = SQLOBJ.get_message(username)
         return page_view("valid",
         name=username,
         key=key[0][0],
@@ -163,7 +159,7 @@ def register_user(usr, pwd, usr_pub_key):
 	SQLOBJ.add_user(usr, pwd)
 	SQLOBJ.add_user_key(usr, usr_pub_key)
 
-	print(SQLOBJ.get_pub_key(usr)[0]) # uncomment me for intermediate value
+	# print(SQLOBJ.get_pub_key(usr)[0]) # uncomment me for intermediate value
 
 	return page_view('registration_complete', user=usr)
 
@@ -206,7 +202,7 @@ def logout():
 # Msg part
 #-----------------------------------------------------------------------------
 
-def insert_msg_ciphertext(sender_pub_key, recipient=None, nonce=-1, ciphertext=None):
+def insert_msg_ciphertext(sender_pub_key, recipient=None, nonce=-1, ciphertext=None, sender=None):
 	'''
 		insert the msg ciphertext in SQL database.db
 		rows: [sender_pub_key INT] [recipient TEXT] [nonce INT] [ciphertext TEXT]
@@ -216,7 +212,7 @@ def insert_msg_ciphertext(sender_pub_key, recipient=None, nonce=-1, ciphertext=N
 			3. Display all decrypted messages (messages should make sense)
 	'''
 	
-	SQLOBJ.insert_message(int(sender_pub_key), recipient, nonce, ciphertext)
+	SQLOBJ.insert_message(int(sender_pub_key), recipient, nonce, ciphertext, sender)
 	
 	return page_view('message_sucesss')
 

@@ -105,9 +105,7 @@ def post_login():
     return model.login_check(username, password)
 
 #-----------------------------------------------------------------------------
-
 # register a new user
-
 #-----------------------------------------------------------------------------
 
 @get('/about')
@@ -118,6 +116,7 @@ def get_about():
         Serves the about page
     '''
     return model.about()
+
 #-----------------------------------------------------------------------------
 
 # Help with debugging
@@ -198,24 +197,18 @@ def get_message_ciphertext():
 	recipient = request.forms.get('recipient')
 	pub_key = request.forms.get('sender_pub_key')
 	nonce = request.forms.get('nonce')
+	sender = request.forms.get('sender')
 
-	print(cipher, '\n', recipient, '\n', pub_key, '\n', nonce, sep='')
+	print(cipher, '\n', recipient, '\n', pub_key, '\n', nonce, '\n', sender, sep='')
 
 	return model.insert_msg_ciphertext(
 		sender_pub_key = pub_key,
 		ciphertext = cipher,
 		recipient = recipient,
-		nonce = nonce
+		nonce = nonce,
+		sender = sender
 	)
 
-#-----------------------------------------------------------------------------
-#@get('/message')
-#def message_user():
-#	'''
-#		Take em to the messaging page
-#	'''
-#	print("messaging")
-#	return model.message_page()
 
 
 
