@@ -12,7 +12,10 @@ p = 17
 -->
 <script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+
 <script src="js/message.js"></script>
+
 <script>
 	function send() {
 		get_params_and_send('{{recipient_key[0][0]}}', '{{recipient}}', '{{nonce}}');
@@ -33,6 +36,7 @@ p = 17
     <input type="hidden" id="recipient" name="recipient"/>
     <input type="hidden" id="sender_pub_key" name="sender_pub_key"/>
     <input type="hidden" id="nonce" name="nonce"/>
+    <input type="hidden" id="sender" name="sender"/>
  </br>
     <input value="Send" type="submit" onclick="send()"/>
 </form>
