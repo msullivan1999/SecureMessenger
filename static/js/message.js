@@ -5,6 +5,7 @@
 */
 
 function get_params_and_send(recipient_key, recipient, nonce) {
+
 	var msg = document.getElementById("message");
 	var text = msg.value;
 	var sender_public = sessionStorage.getItem('usr_key');
@@ -37,4 +38,5 @@ function get_params_and_send(recipient_key, recipient, nonce) {
 	document.getElementById("sender_pub_key").value = sender_public.toString();
 	document.getElementById("nonce").value = nonce;
 	document.getElementById("recipient").value = recipient;
+	document.getElementById("sender").value = sessionStorage.getItem('current_user');
 }
