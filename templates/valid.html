@@ -40,16 +40,16 @@ Display friends list
 <h3>Messages</h3>
 <table class="styled" id ="msgtable">
     <thead>
-    	<td>From</td>
-    	<td>Message</td>
+    	<td><b>From</b></td>
+    	<td><b>Message</b></td>
     </thead>
     <tbody>
         % for i in range(len(msg)):
         <tr>
-        		<td>{{msg[i][0]}}</td>
+        		<td>{{msg[i][1]}} </td>
         		<td id={{i}}>
         			<script>
-        				foo('{{msg[i][0]}}', '{{msg[i][2]}}', '{{msg[i][3]}}', '{{i}}');
+        				foo('{{msg[i][0]}}', '{{msg[i][3]}}', '{{msg[i][4]}}', '{{i}}');
         			</script>
         		</td>
         </tr>
