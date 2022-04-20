@@ -7,6 +7,7 @@ Display friends list
 
 <script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.2.0/sha.js" integrity="sha512-mvfoZwdzM8yPhlNxN1lU8S5wcfC5aPRCD3W0jsOeA+D75MMCrycxQqIvt6K7c5P7jItn7AXiAreuR+eockUHwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/decrypt.js"></script>
 
 <script>
@@ -24,7 +25,7 @@ Display friends list
 </script>
 
 <script>
-	function foo(sender_public_key, nonce, ciphertext, i) {
+	function foo(sender_hmac, sender_public_key, nonce, ciphertext, i, sender_name) {
 		var t = document.getElementById(i);
 		
 		var recipient_public = sessionStorage.getItem('usr_key');
@@ -34,7 +35,19 @@ Display friends list
 		var decrypted = CryptoJS.AES.decrypt(ciphertext, shared.toString() + nonce);
 
 		t.textContent = decrypted.toString(CryptoJS.enc.Utf8);
+		check_hmac(sender_hmac, shared, ciphertext, sender_name)
 	}
+
+	function check_hmac(sender_hmac, shared, ciphertext, sender_name){
+		const shaObj = new jsSHA("SHA-512", "TEXT", {
+		hmacKey: { value: shared.toString(), format: "TEXT" },});
+		shaObj.update(ciphertext.toString());
+		const recipient_hmac = shaObj.getHash("HEX");
+		if(sender_hmac !== recipient_hmac){
+			alert("HMACs do not match - message integrity or authentication has not been maintained")
+		}
+	}
+
 </script>
 
 <h3>Messages</h3>
@@ -46,10 +59,10 @@ Display friends list
     <tbody>
         % for i in range(len(msg)):
         <tr>
-        		<td>{{msg[i][1]}} </td>
+        		<td>{{msg[i][2]}} </td>
         		<td id={{i}}>
         			<script>
-        				foo('{{msg[i][0]}}', '{{msg[i][3]}}', '{{msg[i][4]}}', '{{i}}');
+        				foo('{{msg[i][0]}}', '{{msg[i][1]}}', '{{msg[i][4]}}', '{{msg[i][5]}}', '{{i}}', '{{msg[i][2]}}');
         			</script>
         		</td>
         </tr>

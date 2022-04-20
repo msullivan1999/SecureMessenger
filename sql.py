@@ -226,7 +226,7 @@ class SQLDatabase():
 		''' insert ciphertext into Messages table '''
 		cmd = '''
 		INSERT INTO Messages VALUES(
-				{hmac},
+				'{hmac}',
 				{sender_pub_key},
 				'{sender}',
 				'{recipient}',
