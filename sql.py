@@ -72,10 +72,14 @@ class SQLDatabase():
 			username TEXT
 		)''')
 
+		# nonce is a hexstring APPENDED to the end of the
+		# shared key
 		self.execute('''CREATE TABLE Messages (
+			hmac TEXT,
 			sender_pub_key INT,
+			sender TEXT,
 			recipient TEXT,
-			nonce INT,
+			nonce TEXT,
 			message TEXT
 		)''')
 
@@ -89,7 +93,7 @@ class SQLDatabase():
 		self.commit()
 
 		# Add our admin user
-		self.add_user(username='admin', password=admin_password, admin=1)
+		# self.add_user(username='admin', password=admin_password, admin=1)
 
 	#-----------------------------------------------------------------------------
 	# User handling
@@ -218,13 +222,44 @@ class SQLDatabase():
 		self.execute(cmd)
 
 
-	def insert_message(self, ciphertext, nonce, sender_public_key):
+	def insert_message(self, hmac, sender_public_key, recipient, nonce, ciphertext, sender):
 		''' insert ciphertext into Messages table '''
-		pass
+		cmd = '''
+		INSERT INTO Messages VALUES(
+				'{hmac}',
+				{sender_pub_key},
+				'{sender}',
+				'{recipient}',
+				'{nonce}',
+				'{message}')
+		'''
+		cmd = cmd.format(
+			hmac = hmac,
+			sender_pub_key=sender_public_key,
+			sender = sender,
+			recipient=recipient,
+			nonce=nonce,
+			message=ciphertext
+			)
+		self.execute(cmd)
 		
-	def get_message(self, sender_pub_key):
-		sql_query = ''
-		messages = [] # list of messages here
+	def get_message(self, recipient):
+		'''
+			get messages for a particular recipient
+		'''
+		query = ''' SELECT * FROM Messages WHERE recipient = '{recipient}'
+		'''
+		query = query.format(recipient=recipient)
+		self.execute(query)
+		messages = self.cur.fetchall() # list of messages here
 		return messages
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
