@@ -12,8 +12,7 @@ p = 17
 -->
 <script src="https://cdn.jsdelivr.net/npm/big.js@6.0.0/big.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.2.0/sha.js" integrity="sha512-mvfoZwdzM8yPhlNxN1lU8S5wcfC5aPRCD3W0jsOeA+D75MMCrycxQqIvt6K7c5P7jItn7AXiAreuR+eockUHwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/message.js"></script>
 
 <script>
@@ -32,6 +31,7 @@ p = 17
  <br>
     <textarea id="message" name="message" rows="4" cols="50"></textarea>
  <br>
+	<input type="hidden" id="hmac" name="hmac"/>
     <input type="hidden" id="ciphertext" name="ciphertext"/>
     <input type="hidden" id="recipient" name="recipient"/>
     <input type="hidden" id="sender_pub_key" name="sender_pub_key"/>

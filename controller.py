@@ -193,6 +193,7 @@ def get_users():
 @post('/message')
 def get_message_ciphertext():
 
+    hmac = request.forms.get('hmac')
 	cipher = request.forms.get('ciphertext')
 	recipient = request.forms.get('recipient')
 	pub_key = request.forms.get('sender_pub_key')
@@ -202,6 +203,7 @@ def get_message_ciphertext():
 	print(cipher, '\n', recipient, '\n', pub_key, '\n', nonce, '\n', sender, sep='')
 
 	return model.insert_msg_ciphertext(
+        hmac = hmac,
 		sender_pub_key = pub_key,
 		ciphertext = cipher,
 		recipient = recipient,

@@ -33,10 +33,19 @@ function get_params_and_send(recipient_key, recipient, nonce) {
 	var decrypted = CryptoJS.AES.decrypt(ciphertext, shared.toString()+nonce);
 	console.log(decrypted.toString(CryptoJS.enc.Utf8)); // decrypts fine
 
-	// set ciphertext content to send back 2 da servr hehe ;)
+	
+	// create hmac using shared secret for integrity and authentication
+	const shaObj = new jsSHA("SHA-512", "TEXT", {
+	hmacKey: { value: shared.toString(), format: "TEXT" },});
+	shaObj.update(ciphertext.toString());
+	const hmac = shaObj.getHash("HEX");
+
+	// set ciphertext, hmac and associated data to be send back to the server
+	document.getElementById("hmac").value = hmac.toString();
 	document.getElementById("ciphertext").value = ciphertext.toString();
 	document.getElementById("sender_pub_key").value = sender_public.toString();
 	document.getElementById("nonce").value = nonce;
 	document.getElementById("recipient").value = recipient;
 	document.getElementById("sender").value = sessionStorage.getItem('current_user');
+
 }

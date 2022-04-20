@@ -202,7 +202,7 @@ def logout():
 # Msg part
 #-----------------------------------------------------------------------------
 
-def insert_msg_ciphertext(sender_pub_key, recipient=None, nonce=-1, ciphertext=None, sender=None):
+def insert_msg_ciphertext(hmac, sender_pub_key, recipient=None, nonce=-1, ciphertext=None, sender=None):
 	'''
 		insert the msg ciphertext in SQL database.db
 		rows: [sender_pub_key INT] [recipient TEXT] [nonce INT] [ciphertext TEXT]
@@ -212,7 +212,7 @@ def insert_msg_ciphertext(sender_pub_key, recipient=None, nonce=-1, ciphertext=N
 			3. Display all decrypted messages (messages should make sense)
 	'''
 	
-	SQLOBJ.insert_message(int(sender_pub_key), recipient, nonce, ciphertext, sender)
+	SQLOBJ.insert_message(hmac, int(sender_pub_key), recipient, nonce, ciphertext, sender)
 	
 	return page_view('message_sucesss')
 

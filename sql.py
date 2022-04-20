@@ -75,6 +75,7 @@ class SQLDatabase():
 		# nonce is a hexstring APPENDED to the end of the
 		# shared key
 		self.execute('''CREATE TABLE Messages (
+			hmac TEXT,
 			sender_pub_key INT,
 			sender TEXT,
 			recipient TEXT,
@@ -221,10 +222,11 @@ class SQLDatabase():
 		self.execute(cmd)
 
 
-	def insert_message(self, sender_public_key, recipient, nonce, ciphertext, sender):
+	def insert_message(self, hmac, sender_public_key, recipient, nonce, ciphertext, sender):
 		''' insert ciphertext into Messages table '''
 		cmd = '''
 		INSERT INTO Messages VALUES(
+				{hmac},
 				{sender_pub_key},
 				'{sender}',
 				'{recipient}',
@@ -232,6 +234,7 @@ class SQLDatabase():
 				'{message}')
 		'''
 		cmd = cmd.format(
+			hmac = hmac,
 			sender_pub_key=sender_public_key,
 			sender = sender,
 			recipient=recipient,
