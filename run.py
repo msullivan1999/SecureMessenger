@@ -34,7 +34,7 @@ import controller
 host = 'localhost'
 
 # Test port, change to the appropriate port to host
-port = 8082
+port = 8090
 
 # Turn this off for production
 debug = True
