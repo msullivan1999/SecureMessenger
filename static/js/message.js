@@ -34,7 +34,7 @@ function get_params_and_send(recipient_key, recipient, nonce) {
 	console.log(decrypted.toString(CryptoJS.enc.Utf8)); // decrypts fine
 
 	
-	// create hmac using shared secretfor integrity and authentication
+	// create hmac using shared secret for integrity and authentication
 	const shaObj = new jsSHA("SHA-512", "TEXT", {
 	hmacKey: { value: shared.toString(), format: "TEXT" },});
 	shaObj.update(ciphertext.toString());
