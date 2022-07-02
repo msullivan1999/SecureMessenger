@@ -6,12 +6,14 @@
 
 function get_params_and_send(recipient_key, recipient, nonce) {
 
+	var prime = 17;
+
 	var msg = document.getElementById("message");
 	var text = msg.value;
 	var sender_public = sessionStorage.getItem('usr_key');
 	var sender_priv = new Big( sessionStorage.getItem( sender_public ).toString() );
 	var recipient_pub = new Big(recipient_key);
-	var shared = recipient_pub.pow(parseInt(sender_priv)).mod(17);
+	var shared = recipient_pub.pow(parseInt(sender_priv)).mod(prime);
 
 	console.log(
 		'recipient: ' + recipient +

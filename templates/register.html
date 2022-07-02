@@ -13,7 +13,7 @@ p = 17 (prime)
 
 
 <script>
-function foo() {
+function create() {
 	/* 
 	* Set value of the hidden field as the public key
 	* Useful for passing the public key off to the server
@@ -23,10 +23,12 @@ function foo() {
 	* from user name --> get pub key --> get priv key --> exchange --> encrypt
 	*/
 
+	var base = 2;
+	var prime = 17;
 	var hidden = document.getElementById("pub_id");
 	var min = 1; var max = 52; // note that this only supports 52 users at one time (we did this to prevent overflow in js integers during modulo)
 	var priv_a = Math.floor((Math.random() * (max - min + 1) + min));
-	var pub_key = (Math.pow(2, priv_a))%17;
+	var pub_key = (Math.pow(base, priv_a))%prime;
 
 	console.log("public key: ".concat(pub_key));
 	hidden.value = pub_key;
@@ -44,7 +46,7 @@ function foo() {
     Password: <input name="password" type="password"/>
     <input type="hidden" id="pub_id" name="pub_id"/>
 </br>
-    <input value="Create" type="submit" onclick="foo();"/>
+    <input value="Create" type="submit" onclick="create();"/>
 </form>
 </p>
 
