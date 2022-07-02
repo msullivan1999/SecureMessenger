@@ -1,9 +1,3 @@
-'''
-    This file will handle our typical Bottle requests and responses 
-    You should not have anything beyond basic page loads, handling forms and 
-    maybe some simple program logic
-'''
-
 from bottle import route, get, post, error, request, static_file
 
 import model

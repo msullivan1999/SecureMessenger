@@ -1,21 +1,17 @@
 #-----------------------------------------------------------------------------
 # This class loads html files from the "template" directory and formats them using Python.
-# You can find a fuller explanation for this file in the README file
 #-----------------------------------------------------------------------------
 
 from bottle import SimpleTemplate
 import string
 
 class View():
+
     '''
         A general purpose view generator
         Takes template files and dictionaries and formats them
-        
-        Has default header/tailer behaviour
-
-        To display different headers when logged in, be sure to replace the
-        header keyword argument when calling the function from model
     '''
+
     def __init__(self, 
         template_path="templates/",  # Path to template files
         template_extension=".html",  # Extension of templates, self can be overridden

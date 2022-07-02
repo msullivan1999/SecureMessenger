@@ -54,9 +54,6 @@ def login_check(username, password):
     # By default assume good creds
     login = True
     
-    # use the check_credentials function (l8r)
-    # to hash the salt etc. through
-    
     login = SQLOBJ.check_credentials(username, password)
 
     err_str = "incorrect user and password combination"
