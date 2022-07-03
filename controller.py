@@ -57,7 +57,6 @@ def serve_js(js):
 #-----------------------------------------------------------------------------
 
 # Redirect to login
-@get('/')
 @get('/home')
 def get_index():
     '''
@@ -136,6 +135,7 @@ def get_contact():
 
 #-----------------------------------------------------------------------------
 
+@get('/')
 @get('/register')
 def get_register():
     return model.get_register()
