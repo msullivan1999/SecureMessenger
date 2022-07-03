@@ -26,8 +26,6 @@ def run_server():
 #-----------------------------------------------------------------------------
 
 # What commands can be run with this python file
-# Add your own here as you see fit
-
 command_list = {
     'server'       : run_server
 }
