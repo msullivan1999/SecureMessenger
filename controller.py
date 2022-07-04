@@ -12,11 +12,6 @@ def serve_pictures(picture):
     '''
         serve_pictures
 
-        Serves images from static/img/
-
-        :: picture :: A path to the requested picture
-
-        Returns a static file object containing the requested picture
     '''
     return static_file(picture, root='static/img/')
 
@@ -28,11 +23,6 @@ def serve_css(css):
     '''
         serve_css
 
-        Serves css from static/css/
-
-        :: css :: A path to the requested css
-
-        Returns a static file object containing the requested css
     '''
     return static_file(css, root='static/css/')
 
@@ -44,11 +34,6 @@ def serve_js(js):
     '''
         serve_js
 
-        Serves js from static/js/
-
-        :: js :: A path to the requested javascript
-
-        Returns a static file object containing the requested javascript
     '''
     return static_file(js, root='static/js/')
 
