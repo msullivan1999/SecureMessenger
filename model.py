@@ -3,7 +3,7 @@ import random
 import uuid
 from sql import SQLDatabase
 
-# Initialise our views, all arguments are defaults for the template
+# Initialise our views
 page_view = view.View()
 
 SQLOBJ = SQLDatabase('database.db')
