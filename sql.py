@@ -3,10 +3,6 @@ import hashlib
 import secrets
 
 # This class is a simple handler for all of our SQL database actions
-# Practicing a good separation of concerns, we should only ever call 
-# These functions from our models
-
-# If you notice anything out of place here, consider it to your advantage and don't spoil the surprise
 
 class SQLDatabase():
 	'''

@@ -1,16 +1,9 @@
-'''
-    Our Model class
-    This should control the actual "logic" of your website
-    And nicely abstracts away the program logic from your page loading
-    It should exist as a separate layer to any database or data structure that you might be using
-    Nothing here should be stateful, if it's stateful let the database handle it
-'''
 import view
 import random
 import uuid
 from sql import SQLDatabase
 
-# Initialise our views, all arguments are defaults for the template
+# Initialise our views
 page_view = view.View()
 
 SQLOBJ = SQLDatabase('database.db')
@@ -53,9 +46,6 @@ def login_check(username, password):
 
     # By default assume good creds
     login = True
-    
-    # use the check_credentials function (l8r)
-    # to hash the salt etc. through
     
     login = SQLOBJ.check_credentials(username, password)
 

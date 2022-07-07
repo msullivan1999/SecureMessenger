@@ -1,9 +1,3 @@
-'''
-    This file will handle our typical Bottle requests and responses 
-    You should not have anything beyond basic page loads, handling forms and 
-    maybe some simple program logic
-'''
-
 from bottle import route, get, post, error, request, static_file
 
 import model
@@ -18,11 +12,6 @@ def serve_pictures(picture):
     '''
         serve_pictures
 
-        Serves images from static/img/
-
-        :: picture :: A path to the requested picture
-
-        Returns a static file object containing the requested picture
     '''
     return static_file(picture, root='static/img/')
 
@@ -34,11 +23,6 @@ def serve_css(css):
     '''
         serve_css
 
-        Serves css from static/css/
-
-        :: css :: A path to the requested css
-
-        Returns a static file object containing the requested css
     '''
     return static_file(css, root='static/css/')
 
@@ -50,11 +34,6 @@ def serve_js(js):
     '''
         serve_js
 
-        Serves js from static/js/
-
-        :: js :: A path to the requested javascript
-
-        Returns a static file object containing the requested javascript
     '''
     return static_file(js, root='static/js/')
 
@@ -63,7 +42,6 @@ def serve_js(js):
 #-----------------------------------------------------------------------------
 
 # Redirect to login
-@get('/')
 @get('/home')
 def get_index():
     '''
@@ -142,6 +120,7 @@ def get_contact():
 
 #-----------------------------------------------------------------------------
 
+@get('/')
 @get('/register')
 def get_register():
     return model.get_register()
