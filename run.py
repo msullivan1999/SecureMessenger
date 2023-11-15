@@ -8,13 +8,13 @@ import controller
 
 #-----------------------------------------------------------------------------
 # Change this to your IP address or 0.0.0.0 when actually hosting
-host = 'localhost'
+host = 20.11.24.131
 
 # Test port, change to the appropriate port to host
-port = 8083
+port = 80
 
 # Turn this off for production
-debug = True
+debug = False
 
 def run_server():    
     '''
