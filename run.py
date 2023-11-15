@@ -8,7 +8,7 @@ import controller
 
 #-----------------------------------------------------------------------------
 # Change this to your IP address or 0.0.0.0 when actually hosting
-host = 'localhost'
+host = '0.0.0.0'
 
 # Test port, change to the appropriate port to host
 port = 8080
