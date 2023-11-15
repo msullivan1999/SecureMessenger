@@ -11,7 +11,7 @@ import controller
 host = '0.0.0.0'
 
 # Test port, change to the appropriate port to host
-port = 8080
+port = 5000
 
 # Turn this off for production
 debug = False
